@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
     /*** Отправка заказа в Telegram ***/
     async function sendOrderToTelegram() {
         const token = "7978127151:AAEiJVWSEmrXn6pj26O3C8HrSNVmKZYKyDA"; // Замените на токен вашего бота
-        const chatId = "-1002430027699";  // Замените на ваш chat_id
+        const chatId = "1776219693";  // Замените на ваш chat_id
 
         let message = "🛒 *Ваш заказ:*\n";
         let total = 0;
@@ -426,4 +426,89 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    // Элементы модального окна
+    const modal = document.getElementById("modal");
+    const closeModal = document.getElementById("close-modal");
+    const modalImage = document.getElementById("modal-image");
+    const modalTitle = document.getElementById("modal-title");
+    const modalPrice = document.getElementById("modal-price");
+    const quantityDisplay = document.getElementById("quantity");
+    const addToCartButton = document.getElementById("add-to-cart");
+    const totalPriceDisplay = document.getElementById("total-price-modal");
+
+    let cart = {};
+    let currentQuantity = 1;
+    let itemPrice = 0;
+
+    // Открытие модального окна товара
+    document.querySelectorAll(".food-item").forEach((item) => {
+        item.addEventListener("click", () => {
+            const price = parseInt(item.dataset.price, 10);
+            itemPrice = price;
+
+            modalImage.src = item.dataset.image;
+            modalTitle.textContent = item.dataset.name;
+            modalPrice.textContent = `Цена: ₽ ${price}`;
+            currentQuantity = 1; // Сброс количества при открытии нового товара
+            quantityDisplay.textContent = currentQuantity;
+            totalPriceDisplay.textContent = `Общая стоимость: ₽ ${itemPrice * currentQuantity}`;
+
+            modal.classList.remove("hidden");
+            modal.style.display = "flex";
+        });
+    });
+
+    // Закрытие модального окна товара
+    closeModal.addEventListener("click", () => {
+        modal.classList.add("hidden");
+        modal.style.display = "none";
+    });
+
+    // Увеличение и уменьшение количества товара
+    document.getElementById("plus").addEventListener("click", () => {
+        currentQuantity++;
+        quantityDisplay.textContent = currentQuantity;
+        updateTotalPrice();
+    });
+
+    document.getElementById("minus").addEventListener("click", () => {
+        if (currentQuantity > 1) {
+            currentQuantity--;
+            quantityDisplay.textContent = currentQuantity;
+            updateTotalPrice();
+        }
+    });
+
+    // Функция для обновления общей стоимости в модальном окне
+    function updateTotalPrice() {
+        const totalPrice = itemPrice * currentQuantity;
+        totalPriceDisplay.textContent = `Общая стоимость: ₽ ${totalPrice}`;
+    }
+
+    // Добавление товара в корзину
+    addToCartButton.addEventListener("click", () => {
+        const itemName = modalTitle.textContent;
+
+        if (!cart[itemName]) {
+            cart[itemName] = {
+                price: itemPrice,
+                quantity: 0,
+            };
+        }
+
+        cart[itemName].quantity += currentQuantity; // Добавляем текущее количество товара в корзину
+
+        updateCart(); // Обновляем корзину после добавления товара
+
+        modal.classList.add("hidden");
+        modal.style.display = "none";
+    });
+
+    // Обновление корзины (пример функции)
+    function updateCart() {
+        // Реализация обновления корзины
+        // Например, пересчёт количества товаров и стоимости
+    }
+});
 
