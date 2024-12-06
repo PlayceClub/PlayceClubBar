@@ -163,38 +163,48 @@ button:hover {
 .logo img {
     width: 120px;
 }
-
 .filters {
     display: flex;
-    gap: 10px;
-    padding: 10px;
-    justify-content: flex-start;
     overflow-x: auto;
-    scroll-behavior: smooth;
-    background-color: #000;
-    white-space: nowrap; /* Убирает перенос строк */
-    -webkit-overflow-scrolling: touch; /* Для плавности на iOS */
+    padding: 10px;
+    gap: 10px;
+    white-space: nowrap;
+    background-color: #000000;
+    border-bottom: 1px solid #ffd000;
+}
+.filters button {
+    flex: 0 0 auto;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #ff7b00;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    touch-action: manipulation;
+}
+.filters button:hover {
+    background-color: #0056b3;
+}
+.filters button:active {
+    background-color: #00408a;
+}
+#proceed-to-order {
+    background-color: #ff8800;
+}
+#proceed-to-order:hover {
+    background-color: #e05a00;
+}
+#proceed-to-order:active {
+    background-color: #7e411e;
 }
 
 .filters::-webkit-scrollbar {
     display: none; /* Скрыть полоску прокрутки */
 }
 
-.filters .filter {
-    flex: 0 0 auto; /* Элементы не сжимаются и не переносятся */
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    background-color: #333;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
 
-.filters .filter.active,
-.filters .filter:hover {
-    background-color: #ff6600;
-}
 
 #modal, #cart-modal {
     position: fixed;
