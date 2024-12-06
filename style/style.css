@@ -165,45 +165,73 @@ button:hover {
 }
 .filters {
     display: flex;
-    overflow-x: auto;
-    padding: 10px;
     gap: 10px;
-    white-space: nowrap;
-    background-color: #000000;
-    border-bottom: 1px solid #ffd000;
+    padding: 10px 20px; /* Добавляем внутренние отступы */
+    justify-content: flex-start; /* Располагаем элементы в начале */
+    align-items: center;
+    background-color: #000;
+    overflow-x: auto; /* Горизонтальная прокрутка */
+    white-space: nowrap; /* Убираем перенос строк */
+    border-bottom: 2px solid #ff6600; /* Линия снизу */
+    -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
+    scroll-padding-left: 20px; /* Устанавливаем начальную точку прокрутки */
 }
-.filters button {
-    flex: 0 0 auto;
-    padding: 10px 20px;
+
+/* Убираем стандартную полосу прокрутки */
+.filters::-webkit-scrollbar {
+    display: none;
+}
+
+/* Стили кнопок */
+.filters .filter {
+    flex: 0 0 auto; /* Фиксированный размер кнопки */
+    padding: 10px 15px;
     border: none;
     border-radius: 20px;
-    background-color: #ff7b00;
-    color: white;
-    font-size: 16px;
+    background-color: #333;
+    color: #fff;
+    font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    touch-action: manipulation;
-}
-.filters button:hover {
-    background-color: #0056b3;
-}
-.filters button:active {
-    background-color: #00408a;
-}
-#proceed-to-order {
-    background-color: #ff8800;
-}
-#proceed-to-order:hover {
-    background-color: #e05a00;
-}
-#proceed-to-order:active {
-    background-color: #7e411e;
 }
 
-.filters::-webkit-scrollbar {
-    display: none; /* Скрыть полоску прокрутки */
+.filters .filter:hover {
+    background-color: #ff6600;
 }
 
+.filters .filter.active {
+    background-color: #ff7f00;
+    color: #000;
+}
+
+/* Мобильные стили */
+@media (max-width: 768px) {
+    .filters {
+        padding: 5px 10px; /* Меньше отступов для мобильных устройств */
+        gap: 8px;
+    }
+
+    .filters .filter {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+}
+
+/* Планшеты */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .filters {
+        padding: 10px 15px; /* Средний отступ */
+        gap: 10px;
+    }
+
+    .filters .filter {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}
+.cart{
+    padding: 30px 30px 30px 30px;
+}
 
 
 #modal, #cart-modal {
