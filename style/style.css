@@ -277,9 +277,10 @@ button:hover {
     right: 10px;
     background-color: transparent;
     border: none;
-    font-size: 18px;
+    font-size: 38px;
     cursor: pointer;
-    color: #ff6600; /* Оранжевый цвет */
+    color: #ffffff; /* Оранжевый цвет */
+    background: #00000079;
 }
 
 /* Изображения внутри модального окна */
