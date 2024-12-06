@@ -1,0 +1,287 @@
+/* Общие стили */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    color: #fff;
+}
+
+
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #000;
+}
+
+.header-content h1 {
+    font-size: 36px;
+    text-transform: uppercase;
+    font-weight: 200;
+    margin: 10px 10px -18px 10px;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    justify-content: center;
+    background-color: #000;
+}
+
+.filters .filter {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filters .filter.active,
+.filters .filter:hover {
+    background-color: #ff6600;
+}
+
+/* Галерея */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    padding: 10px;
+    justify-content: center;
+}
+
+.food-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.food-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.food-item:hover img {
+    transform: scale(1.1);
+}
+
+/* Модальные окна */
+#modal, #cart-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Кнопки */
+button {
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #ff6600;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #e55b00;
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    .header-content h1 {
+        font-size: 28px;
+    }
+
+    .filters .filter {
+        padding: 8px 16px;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #modal, #cart-modal {
+        width: 95%;
+        max-width: 400px;
+    }
+}
+
+/* Адаптация для больших экранов */
+@media (min-width: 1024px) {
+    .gallery {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .filters .filter {
+        padding: 10px 20px;
+    }
+
+    #modal, #cart-modal {
+        width: 50%;
+        max-width: 700px;
+    }
+}
+.logo img {
+    width: 120px;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    background-color: #000;
+    white-space: nowrap; /* Убирает перенос строк */
+    -webkit-overflow-scrolling: touch; /* Для плавности на iOS */
+}
+
+.filters::-webkit-scrollbar {
+    display: none; /* Скрыть полоску прокрутки */
+}
+
+.filters .filter {
+    flex: 0 0 auto; /* Элементы не сжимаются и не переносятся */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filters .filter.active,
+.filters .filter:hover {
+    background-color: #ff6600;
+}
+
+#modal, #cart-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%; /* Адаптивная ширина */
+    max-width: 400px;
+    background-color: #000; /* Черный фон */
+    color: #ffffff; /* Оранжевый текст */
+    border-radius: 10px; /* Скругленные углы */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Тень */
+    padding: 20px;
+    z-index: 1000;
+    display: none; /* Скрыто по умолчанию */
+    flex-direction: column;
+    align-items: center;
+    overflow: auto; /* Прокрутка для больших окон */
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+#modal.show, #cart-modal.show {
+    display: flex; /* Показываем окно */
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Кнопка закрытия модального окна */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #ff6600; /* Оранжевый цвет */
+}
+
+/* Изображения внутри модального окна */
+#modal img, #cart-modal img {
+    max-width: 100%; /* Изображение не выходит за пределы контейнера */
+    height: auto; /* Сохраняем пропорции */
+    border-radius: 10px; /* Скругленные углы */
+    margin-bottom: 20px; /* Отступ снизу */
+   
+}
+
+/* Стили кнопок внутри модального окна */
+.modal-content button {
+    padding: 10px 15px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #ff6600; /* Оранжевый фон */
+    color: #000; /* Черный текст */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+    background-color: #ff6600; /* Темно-оранжевый при наведении */
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    #modal, #cart-modal {
+        width: 95%; /* Ширина окна на мобильных устройствах */
+        max-width: 320px;
+        padding: 15px; /* Меньше отступов */
+    }
+
+    .close-button {
+        font-size: 20px; /* Увеличиваем размер кнопки закрытия */
+    }
+
+    .modal-content {
+        font-size: 14px; /* Уменьшаем шрифт */
+    }}
