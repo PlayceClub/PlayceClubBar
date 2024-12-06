@@ -195,27 +195,18 @@
 
     <!-- Модальное окно -->
     <div id="modal" class="hidden">
-        <div class="modal-content">
-            <!-- Кнопка закрытия -->
-            <button id="close-modal" class="close-button">×</button>
-    
-            <!-- Содержимое модального окна -->
-            <img id="modal-image" src="" alt="Food Image">
-            <div class="modal-details">
-                <p id="modal-description" class="description"></p>
-                <h2 id="modal-title"></h2>
-                <p id="modal-weight"></p>
-                <p id="modal-price" class="price"></p>
-                <div class="modal-actions">
-                    <button id="minus">−</button>
-                    <span id="quantity">1</span>
-                    <button id="plus">+</button>
-                    
-                </div>
-                <button id="add-to-cart">Добавить в корзину <span id="total-price"></span></button>
-                
-            </div>
+        
+        <img id="modal-image" src="" alt="Изображение товара">
+        <h2 id="modal-title"></h2>
+        <p id="modal-price"></p>
+        <div>
+            <button id="minus">−</button>
+            <span id="quantity">1</span>
+            <button id="plus">+</button>
         </div>
+        <p id="total-price-modal">Общая стоимость: ₽ 0</p> <!-- Добавлено для отображения общей стоимости -->
+        <button id="add-to-cart">Добавить в корзину</button>
+        <button id="close-modal" class="close-button">Закрыть</button>
     </div>
     <div id="cart-modal" class="hidden">
         <div class="modal-content">
