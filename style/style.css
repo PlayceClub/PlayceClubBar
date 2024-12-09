@@ -268,6 +268,7 @@ button:hover {
 #modal.show, #cart-modal.show {
     display: flex; /* Показываем окно */
     animation: fadeIn 0.3s ease-out;
+    
 }
 
 /* Кнопка закрытия модального окна */
@@ -303,6 +304,7 @@ button:hover {
     color: #000; /* Черный текст */
     cursor: pointer;
     transition: background-color 0.3s ease;
+    
 }
 
 .modal-content button:hover {
@@ -324,3 +326,29 @@ button:hover {
     .modal-content {
         font-size: 14px; /* Уменьшаем шрифт */
     }}
+
+    #order-comment {
+        background-color: #000; /* Черный фон */
+        color: #ffa500; /* Оранжевый текст */
+        border: 3px solid #ffa500; /* Оранжевая рамка */
+        border-radius: 5px; /* Скругленные углы */
+        padding: 10px 10px 10px 10px; /* Внутренние отступы */
+        font-size: 16px; /* Размер текста */
+        width: 80%; /* Занимает всю ширину */
+        margin-top: 10px; /* Отступ сверху */
+        resize: none; /* Убираем возможность изменения размера */
+        margin-bottom: 15px;
+        
+    }
+    
+    #order-comment::placeholder {
+        color: #ffa60085; /* Цвет текста для placeholder */
+        opacity: 0.8; /* Прозрачность текста */
+        
+    }
+    
+    #order-comment:focus {
+        outline: none; /* Убираем стандартное выделение */
+        border-color: #ff7f00; /* Светло-оранжевая рамка при фокусе */
+        box-shadow: 0 0 6px #ff7f00; /* Добавляем свечение */
+    }
