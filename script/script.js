@@ -123,8 +123,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Отправка заказа в Telegram
     async function sendOrderToTelegram() {
-        const token = "ВАШ_ТОКЕН_БОТА"; // Замените на токен вашего бота
-        const chatId = "ВАШ_CHAT_ID"; // Замените на ваш chat_id
+        const token = "7896482813:AAEejMOwT81LYsozkiDs2v6J7mdQJWvsskg"; // Ваш токен бота
+        const chatId = "-1002430027699";  // Ваш chat_id
 
         let message = "🛒 *Ваш заказ:*\n";
         let total = 0;
