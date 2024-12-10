@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Ваши переменные
     const cartModal = document.getElementById("cart-modal");
     const cartItemsList = document.getElementById("cart-items");
     const cartTotalDisplay = document.getElementById("cart-total");
@@ -10,6 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const quantityDisplay = document.getElementById("quantity");
     const addToCartButton = document.getElementById("add-to-cart");
     const submitOrderButton = document.getElementById("submit-order");
+    const proceedToOrderButton = document.getElementById("proceed-to-order");
+    const closeCartButton = document.getElementById("close-cart");
 
     let cart = {}; // Объект корзины
     let currentQuantity = 1;
@@ -33,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("order-comment").value = ""; // Очищаем поле комментария
             modal.classList.remove("hidden");
             modal.style.display = "flex";
+            updateTotalPrice(); // Обновляем общую стоимость
         });
     });
 
@@ -86,6 +90,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const li = document.createElement("li");
             li.innerHTML = `
                 <span>${name} x${item.quantity} - ₽ ${item.price * item.quantity}</span>
+                <div class="cart-item-controls">
+                    <button class="cart-action" data-name="${name}" data-action="decrease">−</button>
+                    <button class="cart-action" data-name="${name}" data-action="increase">+</button>
+                    <button class="cart-action" data-name="${name}" data-action="remove">Удалить</button>
+                </div>
                 <p><strong>Комментарий:</strong> ${item.comment || "Нет комментария"}</p>
             `;
             cartItemsList.appendChild(li);
@@ -93,12 +102,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         cartTotalDisplay.textContent = total;
+
+        // Управление действиями в корзине
+        document.querySelectorAll(".cart-action").forEach((button) => {
+            button.addEventListener("click", (e) => {
+                const name = e.target.dataset.name;
+                const action = e.target.dataset.action;
+
+                if (action === "decrease" && cart[name].quantity > 1) {
+                    cart[name].quantity--;
+                } else if (action === "increase") {
+                    cart[name].quantity++;
+                } else if (action === "remove") {
+                    delete cart[name];
+                }
+                updateCart(); // Обновляем корзину после изменения
+            });
+        });
     }
 
     // Отправка заказа в Telegram
     async function sendOrderToTelegram() {
-        const token = "7978127151:AAEiJVWSEmrXn6pj26O3C8HrSNVmKZYKyDA"; // Замените на токен вашего бота
-        const chatId = "-1002430027699";  // Замените на ваш chat_id
+        const token = "ВАШ_ТОКЕН_БОТА"; // Замените на токен вашего бота
+        const chatId = "ВАШ_CHAT_ID"; // Замените на ваш chat_id
 
         let message = "🛒 *Ваш заказ:*\n";
         let total = 0;
@@ -148,11 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         sendOrderToTelegram();
     });
-});
-document.addEventListener("DOMContentLoaded", () => {
-    const cartModal = document.getElementById("cart-modal");
-    const proceedToOrderButton = document.getElementById("proceed-to-order");
-    const closeCartButton = document.getElementById("close-cart");
 
     // Открытие корзины
     proceedToOrderButton.addEventListener("click", () => {
@@ -169,8 +190,9 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
     const filters = document.querySelectorAll(".filter");
     const foodItems = document.querySelectorAll(".food-item");
+    const cartItemsList = document.getElementById("cart-items");
 
-    // Обработчик клика по фильтрам
+    // Функция фильтрации товаров
     filters.forEach((filter) => {
         filter.addEventListener("click", () => {
             const category = filter.dataset.category;
@@ -179,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
             filters.forEach((btn) => btn.classList.remove("active"));
             filter.classList.add("active");
 
-            // Показываем или скрываем товары
+            // Фильтрация товаров
             foodItems.forEach((item) => {
                 if (category === "all" || item.dataset.category === category) {
                     item.style.display = "block";
@@ -189,4 +211,54 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     });
+
+    // Обновление корзины с учетом фильтра
+    function updateCartByCategory(category) {
+        cartItemsList.innerHTML = ""; // Очищаем корзину
+
+        let total = 0;
+
+        for (const [name, item] of Object.entries(cart)) {
+            if (category === "all" || item.category === category) {
+                const li = document.createElement("li");
+                li.innerHTML = `
+                    <div class="cart-item">
+                        <span>${name} x${item.quantity} - ₽${item.price * item.quantity}</span>
+                        <div class="cart-item-actions">
+                            <button class="cart-action" data-name="${name}" data-action="decrease">-</button>
+                            <button class="cart-action" data-name="${name}" data-action="increase">+</button>
+                            <button class="cart-action" data-name="${name}" data-action="remove">Удалить</button>
+                        </div>
+                    </div>
+                `;
+                cartItemsList.appendChild(li);
+                total += item.price * item.quantity;
+            }
+        }
+
+        document.getElementById("cart-total").textContent = total;
+
+        // Добавляем обработчики кнопок корзины
+        document.querySelectorAll(".cart-action").forEach((button) => {
+            button.addEventListener("click", (e) => {
+                const name = e.target.dataset.name;
+                const action = e.target.dataset.action;
+
+                if (action === "decrease" && cart[name].quantity > 1) {
+                    cart[name].quantity--;
+                } else if (action === "increase") {
+                    cart[name].quantity++;
+                } else if (action === "remove") {
+                    delete cart[name];
+                }
+                updateCartByCategory(category); // Обновляем корзину для выбранной категории
+            });
+        });
+    }
+
+    // Изначально показываем все товары в корзине
+    updateCartByCategory("all");
+
+    // Добавьте вызов этой функции при добавлении товаров в корзину
+    // addToCart("Пицца", "Основные блюда", 300);
 });
