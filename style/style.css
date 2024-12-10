@@ -352,3 +352,44 @@ button:hover {
         border-color: #ff7f00; /* Светло-оранжевая рамка при фокусе */
         box-shadow: 0 0 6px #ff7f00; /* Добавляем свечение */
     }
+
+    .cart-actions {
+        display: flex;
+        justify-content: space-between; /* Разделяем кнопки по краям */
+        margin-top: 20px; /* Отступ сверху */
+    } 
+    
+    #close-cart {
+        background-color: #ff9900; /* Красный цвет для кнопки закрытия */
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        flex: 1; /* Растягиваем кнопки одинаково */
+        margin-right: 10px; /* Отступ между кнопками */
+        margin-bottom: 20px;
+        width: 80%
+    }
+    
+    #close-cart:hover {
+        background-color: #000000; /* Тёмно-красный при наведении */
+    }
+    
+    #submit-order {
+        background-color: #ff9100; /* Зелёный цвет для кнопки оформления заказа */
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 50%; /* Растягиваем кнопки одинаково */
+    }
+    
+    #submit-order:hover {
+        background-color: #ff7300; /* Тёмно-зелёный при наведении */
+        color: #ffffff;
+    }
+    
