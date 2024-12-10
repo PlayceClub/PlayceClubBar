@@ -329,8 +329,8 @@ button:hover {
 
     #order-comment {
         background-color: #000; /* Черный фон */
-        color: #ffa500; /* Оранжевый текст */
-        border: 3px solid #ffa500; /* Оранжевая рамка */
+        color: #ff6600; /* Оранжевый текст */
+        border: 3px solid #ff6600; /* Оранжевая рамка */
         border-radius: 5px; /* Скругленные углы */
         padding: 10px 10px 10px 10px; /* Внутренние отступы */
         font-size: 16px; /* Размер текста */
@@ -357,20 +357,22 @@ button:hover {
         display: flex;
         justify-content: space-between; /* Разделяем кнопки по краям */
         margin-top: 20px; /* Отступ сверху */
+        
     } 
     
     #close-cart {
-        background-color: #ff9900; /* Красный цвет для кнопки закрытия */
+        background-color: #ff7300; /* Красный цвет для кнопки закрытия */
         color: white;
-        padding: 10px 20px;
+        padding: 10px 10px;
         border: none;
         border-radius: 5px;
         cursor: pointer;
         font-size: 16px;
         flex: 1; /* Растягиваем кнопки одинаково */
-        margin-right: 10px; /* Отступ между кнопками */
+        margin-right: 0px; /* Отступ между кнопками */
         margin-bottom: 20px;
         width: 80%
+        
     }
     
     #close-cart:hover {
@@ -378,9 +380,9 @@ button:hover {
     }
     
     #submit-order {
-        background-color: #ff9100; /* Зелёный цвет для кнопки оформления заказа */
+        background-color: #ff6600; /* Зелёный цвет для кнопки оформления заказа */
         color: white;
-        padding: 10px 20px;
+        padding: 10px 10px;
         border: none;
         border-radius: 5px;
         cursor: pointer;
@@ -389,7 +391,7 @@ button:hover {
     }
     
     #submit-order:hover {
-        background-color: #ff7300; /* Тёмно-зелёный при наведении */
+        background-color: #ff6600; /* Тёмно-зелёный при наведении */
         color: #ffffff;
     }
     
