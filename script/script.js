@@ -126,43 +126,44 @@ document.addEventListener("DOMContentLoaded", () => {
         const token = "7896482813:AAEejMOwT81LYsozkiDs2v6J7mdQJWvsskg"; // Ваш токен бота
         const chatId = "-1002430027699";  // Ваш chat_id
 
-        let message = `🛒 *Ваш заказ с номера стола №${tableNumber || "не определён"}:*\n`;
-    let total = 0;
+        let message = "🛒 *Ваш заказ:*\n";
+        let total = 0;
 
-    for (const [name, item] of Object.entries(cart)) {
-        message += `- ${name} x${item.quantity} = ₽${item.price * item.quantity}\n`;
-        if (item.comment) {
-            message += `  Комментарий: ${item.comment}\n`;
+        for (const [name, item] of Object.entries(cart)) {
+            message += `- ${name} x${item.quantity} = ₽${item.price * item.quantity}\n`;
+            if (item.comment) {
+                message += `  Комментарий: ${item.comment}\n`;
+            }
+            total += item.price * item.quantity;
         }
-        total += item.price * item.quantity;
-    }
 
-    message += `\n💰 *Общая стоимость:* ₽${total}`;
+        message += `\n💰 *Общая стоимость:* ₽${total}`;
 
-    const url = `https://api.telegram.org/bot${token}/sendMessage`;
+        const url = `https://api.telegram.org/bot${token}/sendMessage`;
 
-    try {
-        const response = await fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                chat_id: chatId,
-                text: message,
-                parse_mode: "Markdown",
-            }),
-        });
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                    parse_mode: "Markdown",
+                }),
+            });
 
-        const result = await response.json();
-        if (result.ok) {
-            alert("Заказ успешно отправлен в Telegram!");
-            cart = {};
-            updateCart();
-        } else {
-            alert("Ошибка при отправке заказа. Проверьте токен или chat_id.");
+            const result = await response.json();
+            if (result.ok) {
+                alert("Заказ успешно отправлен в Telegram!");
+                cart = {};
+                updateCart();
+            } else {
+                alert("Ошибка при отправке заказа. Проверьте токен или chat_id.");
+            }
+        } catch (error) {
+            console.error("Ошибка при отправке заказа:", error);
+            alert("Не удалось отправить заказ. Проверьте соединение с интернетом.");
         }
-    } catch (error) {
-        console.error("Ошибка при отправке заказа:", error);
-        alert("Не удалось отправить заказ. Проверьте соединение с интернетом.");
     }
 
     // Оформление заказа
@@ -261,7 +262,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Добавьте вызов этой функции при добавлении товаров в корзину
     // addToCart("Пицца", "Основные блюда", 300);
 });
-// Получаем номер стола из URL
 const urlParams = new URLSearchParams(window.location.search);
 const tableNumber = urlParams.get('table'); // Считываем параметр "table"
 
@@ -271,19 +271,4 @@ if (tableNumber) {
     tableInfoDiv.textContent = `Вы находитесь за столом №${tableNumber}`;
 } else {
     tableInfoDiv.textContent = 'Ваш стол не определён. Используйте QR-код.';
-}
-
-// Пример отправки заказа
-function sendOrder(orderDetails) {
-    if (!tableNumber) {
-        alert('Номер стола не определён. Используйте QR-код.');
-        return;
-    }
-
-    // Создаем текст заказа
-    const message = `Заказ с номера стола: ${tableNumber}\nТовары: ${orderDetails}`;
-
-    // Выводим в консоль (или отправляем на сервер/Telegram-бот)
-    console.log(message);
-    alert('Заказ отправлен!\n' + message);
 }
