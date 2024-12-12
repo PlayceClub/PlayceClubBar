@@ -25,19 +25,34 @@
             <img src="img/ICO/log.png" alt="Playce Logo">
         </div>
     </header>
+
+    <main>
+        <!-- Информация о столе -->
+        <div id="table-info">Определяем ваш стол...</div>
+
+        <!-- Пример заказа -->
+        <div id="menu">
+            <h2>Меню</h2>
+            <button onclick="sendOrder('Пицца, 2 шт.')">Добавить заказ</button>
+        </div>
+    </main>
+    <div style="position: sticky; top: 0; background-color: black; z-index: 1000;">
     <div class="cart">
     <button id="proceed-to-order">Перейти к заказу</button>
 </div>
+<div style="display: flex; gap: 10px; padding: 10px; background-color: black;">
     <section class="filters">
         <button class="filter" data-category="all">Все</button>
         <button class="filter" data-category="Пицца">Пицца</button>
         <button class="filter" data-category="Закуски">Закуски</button>
         <button class="filter" data-category="Напитки">Напитки</button>
         <button class="filter" data-category="Соусы">Соусы</button>
+        <button class="filter" data-category="Сладкое">Сладкое</button>
         <button class="filter" data-category="Алкоголь">Алкогольные напитки</button>
         <button class="filter" data-category="Безалкогольные">Безалкогольные напитки</button>
     </section>
-
+    </div>
+</div>
     <section class="gallery">
         <div class="food-item" data-name="Пицца ветчина и грибы" data-category="Пицца" data-price="700" data-description="Пицца ветчина и грибы" data-image="img/zotman_ветчина и грибы_6.png">
             <img src="img/zotman_ветчина и грибы_6.png" alt="Пицца ветчина и грибы">
@@ -169,6 +184,9 @@
             <div class="food-item" data-name="BBQ"  data-category="Соусы" data-price="100" data-description="BBQ" data-image="img/BBQ_p.png">
                 <img src="img/BBQ_p.png" alt="BBQ">
             </div>
+
+           
+
 
 
             <div class="food-item" data-name="Безалкогольное пиво"  data-category="Безалкогольные" data-price="250" data-description="BBQ" data-image="img/безалкоголь_циндао_пиво_p.png">
