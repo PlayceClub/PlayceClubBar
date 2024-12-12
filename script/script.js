@@ -262,13 +262,3 @@ document.addEventListener("DOMContentLoaded", () => {
     // Добавьте вызов этой функции при добавлении товаров в корзину
     // addToCart("Пицца", "Основные блюда", 300);
 });
-const urlParams = new URLSearchParams(window.location.search);
-const tableNumber = urlParams.get('table'); // Считываем параметр "table"
-
-// Отображаем номер стола на странице
-const tableInfoDiv = document.getElementById('table-info');
-if (tableNumber) {
-    tableInfoDiv.textContent = `Вы находитесь за столом №${tableNumber}`;
-} else {
-    tableInfoDiv.textContent = 'Ваш стол не определён. Используйте QR-код.';
-}
