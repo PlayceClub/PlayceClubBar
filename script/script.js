@@ -123,8 +123,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Отправка заказа в Telegram
     async function sendOrderToTelegram() {
-        const token = "7896482813:AAEejMOwT81LYsozkiDs2v6J7mdQJWvsskg"; // Ваш токен бота
-        const chatId = "-1002430027699";  // Ваш chat_id
+        const token = "ВАШ_ТОКЕН_БОТА"; // Замените на токен вашего бота
+        const chatId = "ВАШ_CHAT_ID"; // Замените на ваш chat_id
 
         let message = "🛒 *Ваш заказ:*\n";
         let total = 0;
@@ -262,3 +262,29 @@ document.addEventListener("DOMContentLoaded", () => {
     // Добавьте вызов этой функции при добавлении товаров в корзину
     // addToCart("Пицца", "Основные блюда", 300);
 });
+// Получаем номер стола из URL
+const urlParams = new URLSearchParams(window.location.search);
+const tableNumber = urlParams.get('table'); // Считываем параметр "table"
+
+// Отображаем номер стола на странице
+const tableInfoDiv = document.getElementById('table-info');
+if (tableNumber) {
+    tableInfoDiv.textContent = `Вы находитесь за столом №${tableNumber}`;
+} else {
+    tableInfoDiv.textContent = 'Ваш стол не определён. Используйте QR-код.';
+}
+
+// Пример отправки заказа
+function sendOrder(orderDetails) {
+    if (!tableNumber) {
+        alert('Номер стола не определён. Используйте QR-код.');
+        return;
+    }
+
+    // Создаем текст заказа
+    const message = `Заказ с номера стола: ${tableNumber}\nТовары: ${orderDetails}`;
+
+    // Выводим в консоль (или отправляем на сервер/Telegram-бот)
+    console.log(message);
+    alert('Заказ отправлен!\n' + message);
+}
