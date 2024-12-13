@@ -1,5 +1,20 @@
+
+
+
+
+
+const urlParams = new URLSearchParams(window.location.search);
+const tableNumber = urlParams.get('table'); // Считываем параметр "table"
+
+// Отображаем номер стола на странице
+const tableInfoDiv = document.getElementById('table-info');
+if (tableNumber) {
+    tableInfoDiv.textContent = `Вы находитесь за столом №${tableNumber}`;
+} else {
+    tableInfoDiv.textContent = 'Ваш стол не определён. Используйте QR-код.';
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-    // Ваши переменные
     const cartModal = document.getElementById("cart-modal");
     const cartItemsList = document.getElementById("cart-items");
     const cartTotalDisplay = document.getElementById("cart-total");
@@ -121,48 +136,39 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Отправка заказа в Telegram
+    // Функция отправки заказа в Telegram
     async function sendOrderToTelegram() {
-        const token = "7896482813:AAEejMOwT81LYsozkiDs2v6J7mdQJWvsskg"; // Ваш токен бота
+        const botToken = "7896482813:AAEejMOwT81LYsozkiDs2v6J7mdQJWvsskg"; // Ваш токен бота
         const chatId = "-1002430027699";  // Ваш chat_id
+        const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-        let message = "🛒 *Ваш заказ:*\n";
-        let total = 0;
-
+        let orderDetails = "";
         for (const [name, item] of Object.entries(cart)) {
-            message += `- ${name} x${item.quantity} = ₽${item.price * item.quantity}\n`;
-            if (item.comment) {
-                message += `  Комментарий: ${item.comment}\n`;
-            }
-            total += item.price * item.quantity;
+            orderDetails += `${name} x${item.quantity} - ₽${item.price * item.quantity}\nКомментарий: ${item.comment || "Нет комментария"}\n`;
         }
 
-        message += `\n💰 *Общая стоимость:* ₽${total}`;
-
-        const url = `https://api.telegram.org/bot${token}/sendMessage`;
+        const message = `Номер стола: ${tableNumber ? tableNumber : "Неизвестен"}\n\nЗаказ:\n${orderDetails}\nОбщая стоимость: ₽${cartTotalDisplay.textContent}`;
 
         try {
-            const response = await fetch(url, {
+            const response = await fetch(apiUrl, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                },
                 body: JSON.stringify({
                     chat_id: chatId,
                     text: message,
-                    parse_mode: "Markdown",
                 }),
             });
 
-            const result = await response.json();
-            if (result.ok) {
+            if (response.ok) {
                 alert("Заказ успешно отправлен в Telegram!");
-                cart = {};
-                updateCart();
             } else {
-                alert("Ошибка при отправке заказа. Проверьте токен или chat_id.");
+                alert("Ошибка отправки заказа. Проверьте токен или chat_id.");
             }
         } catch (error) {
-            console.error("Ошибка при отправке заказа:", error);
-            alert("Не удалось отправить заказ. Проверьте соединение с интернетом.");
+            console.error("Ошибка:", error);
+            alert("Произошла ошибка при отправке заказа.");
         }
     }
 
@@ -186,79 +192,4 @@ document.addEventListener("DOMContentLoaded", () => {
         cartModal.classList.add("hidden");
         cartModal.style.display = "none";
     });
-});
-document.addEventListener("DOMContentLoaded", () => {
-    const filters = document.querySelectorAll(".filter");
-    const foodItems = document.querySelectorAll(".food-item");
-    const cartItemsList = document.getElementById("cart-items");
-
-    // Функция фильтрации товаров
-    filters.forEach((filter) => {
-        filter.addEventListener("click", () => {
-            const category = filter.dataset.category;
-
-            // Сбрасываем активный класс у всех фильтров
-            filters.forEach((btn) => btn.classList.remove("active"));
-            filter.classList.add("active");
-
-            // Фильтрация товаров
-            foodItems.forEach((item) => {
-                if (category === "all" || item.dataset.category === category) {
-                    item.style.display = "block";
-                } else {
-                    item.style.display = "none";
-                }
-            });
-        });
-    });
-
-    // Обновление корзины с учетом фильтра
-    function updateCartByCategory(category) {
-        cartItemsList.innerHTML = ""; // Очищаем корзину
-
-        let total = 0;
-
-        for (const [name, item] of Object.entries(cart)) {
-            if (category === "all" || item.category === category) {
-                const li = document.createElement("li");
-                li.innerHTML = `
-                    <div class="cart-item">
-                        <span>${name} x${item.quantity} - ₽${item.price * item.quantity}</span>
-                        <div class="cart-item-actions">
-                            <button class="cart-action" data-name="${name}" data-action="decrease">-</button>
-                            <button class="cart-action" data-name="${name}" data-action="increase">+</button>
-                            <button class="cart-action" data-name="${name}" data-action="remove">Удалить</button>
-                        </div>
-                    </div>
-                `;
-                cartItemsList.appendChild(li);
-                total += item.price * item.quantity;
-            }
-        }
-
-        document.getElementById("cart-total").textContent = total;
-
-        // Добавляем обработчики кнопок корзины
-        document.querySelectorAll(".cart-action").forEach((button) => {
-            button.addEventListener("click", (e) => {
-                const name = e.target.dataset.name;
-                const action = e.target.dataset.action;
-
-                if (action === "decrease" && cart[name].quantity > 1) {
-                    cart[name].quantity--;
-                } else if (action === "increase") {
-                    cart[name].quantity++;
-                } else if (action === "remove") {
-                    delete cart[name];
-                }
-                updateCartByCategory(category); // Обновляем корзину для выбранной категории
-            });
-        });
-    }
-
-    // Изначально показываем все товары в корзине
-    updateCartByCategory("all");
-
-    // Добавьте вызов этой функции при добавлении товаров в корзину
-    // addToCart("Пицца", "Основные блюда", 300);
 });
