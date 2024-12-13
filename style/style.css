@@ -29,6 +29,7 @@ header {
     padding: 10px;
     justify-content: center;
     background-color: #000;
+    
 }
 
 .filters .filter {
@@ -39,6 +40,7 @@ header {
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: 20px;
 }
 
 .filters .filter.active,
@@ -70,6 +72,7 @@ header {
 .food-item img {
     width: 100%;
     height: auto;
+    
     border-radius: 10px;
     transition: transform 0.3s ease;
 }
@@ -278,10 +281,10 @@ button:hover {
     right: 10px;
     background-color: transparent;
     border: none;
-    font-size: 38px;
+    font-size: 40px;
     cursor: pointer;
     color: #ffffff; /* Оранжевый цвет */
-    background: #00000079;
+    background: #ff0000;
 }
 
 /* Изображения внутри модального окна */
@@ -369,8 +372,8 @@ button:hover {
         cursor: pointer;
         font-size: 16px;
         flex: 1; /* Растягиваем кнопки одинаково */
-        margin-right: 0px; /* Отступ между кнопками */
-        margin-bottom: 20px;
+        margin-top: 100px; /* Отступ между кнопками */
+        margin-bottom: 0px;
         width: 80%
         
     }
@@ -382,11 +385,11 @@ button:hover {
     #submit-order {
         background-color: #ff6600; /* Зелёный цвет для кнопки оформления заказа */
         color: white;
-        padding: 10px 10px;
+        padding: 15px 20px;
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 20px;
         width: 50%; /* Растягиваем кнопки одинаково */
     }
     
@@ -395,3 +398,10 @@ button:hover {
         color: #ffffff;
     }
     
+
+
+
+
+#table-info {
+    display: none;
+}
